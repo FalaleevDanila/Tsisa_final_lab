@@ -232,7 +232,7 @@ int main() {
 
             double dis = w > d ? w : d;
 
-            if(j == 0 || J > best.dis){
+            if(j == 0 || J > best.J){
                 best_p.lambda=lambda[i];//==h
                 best_p.dis=dis;//==final criterij
                 best_p.alpha=alpha;
@@ -245,42 +245,12 @@ int main() {
 
         disp2(best_p.lambda, best_p.dis, best_p.alpha, best_p.w, best_p.d);
 
-        if(i==0 || best.dis > best_p.dis){
+        if(i==0 || best.J > best_p.J){
             best = best_p;
         }
     }
 
-    disp1(best.lambda, best.J, best.w, best.d);
-
-//======================================================================================================================
-    for(size_t i = 0; i < K; ++i){
-        std::cout<<'('<< xk[i] <<';'<< fxk[i] <<')';
-    }
-    std::cout<< std::endl;
-
-    for(size_t i = 0; i < K; ++i){
-        std::cout<<'('<< xk[i] <<';'<< fxk_noised[i] <<')';
-    }
-    std::cout<< std::endl;
-    std::vector <double> fxk_filtered1; // Вектор значений отфильтрованной функции
-    for(size_t t = 0; t < K; ++t){
-        if(t==0 || t== K-1) {
-            fxk_filtered1.push_back(fxk_noised[t]);
-        }
-        else {
-            std::vector <double> fxk_npie1;
-            fxk_npie1.push_back(fxk_noised[t-1]);
-            fxk_npie1.push_back(fxk_noised[t]);
-            fxk_npie1.push_back(fxk_noised[t+1]);
-            double ons = srGeometr(fxk_npie1, best.alpha);
-            fxk_filtered1.push_back(ons);
-        }
-    }
-    for(size_t i = 0; i < K; ++i){
-        std::cout <<'('<< xk[i] <<';'<< fxk_filtered1[i] <<')';
-    }
-    std::cout<< std::endl;
-//======================================================================================================================
+    disp1(best.lambda, best.dis, best.w, best.d);
 
     std::vector <Answer> answers2;
 
@@ -327,7 +297,7 @@ int main() {
 
             double dis = w > d ? w : d;
 
-            if (j == 0 || J > best.dis) {
+            if (j == 0 || J > best.J) {
                 best_p.lambda = lambda[i];//==h
                 best_p.dis = dis;//==final criterij
                 best_p.alpha = alpha;
@@ -340,34 +310,14 @@ int main() {
 
         disp2(best_p.lambda, best_p.dis, best_p.alpha, best_p.w, best_p.d);
 
-        if (i == 0 || best.dis > best_p.dis) {
+        if (i == 0 || best.J > best_p.J) {
             best = best_p;
         }
     }
 
-    disp1(best.lambda, best.J, best.w, best.d);
+    disp1(best.lambda, best.dis, best.w, best.d);
     // вывод
 
 
-
-    std::cout<< std::endl;
-    std::vector<double> fxk_filtered2; // Вектор значений отфильтрованной функции
-    for (size_t t = 0; t < K; ++t) {
-        if (t == 0 || t==1 || t == K - 1 || t==K-2) {
-            fxk_filtered2.push_back(fxk_noised[t]);
-        } else {
-            std::vector<double> fxk_npie2;
-            fxk_npie2.push_back(fxk_noised[t - 2]);
-            fxk_npie2.push_back(fxk_noised[t - 1]);
-            fxk_npie2.push_back(fxk_noised[t]);
-            fxk_npie2.push_back(fxk_noised[t + 1]);
-            fxk_npie2.push_back(fxk_noised[t + 2]);
-            double ons = srGeometr(fxk_npie2, best.alpha);
-            fxk_filtered2.push_back(ons);
-        }
-    }
-    for(size_t i = 0; i < K; ++i){
-        std::cout <<'('<< xk[i] <<';'<< fxk_filtered2[i] <<')';
-    }
     return 0;
 }
